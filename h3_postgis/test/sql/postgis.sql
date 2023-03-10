@@ -2,8 +2,8 @@
 -- Variables for testing
 \set resolution 10
 \set hexagon '\'8a63a9a99047fff\''
-\set meter ST_SetSRID(ST_Point(6196902.235389061,1413172.0833316022), 3857)
-\set degree ST_SetSRID(ST_Point(55.6677199224442,12.592131261648213), 4326)
+\set meter ST_SetSRID(ST_Point(1413172.0833316022,6196902.235389061), 3857)
+\set degree ST_SetSRID(ST_Point(12.592131261648213,55.6677199224442), 4326)
 \set edgecross '\'8003fffffffffff\'::h3index'
 \set polar '\'81f2bffffffffff\'::h3index'
 \set lat1 84.76455330449812
