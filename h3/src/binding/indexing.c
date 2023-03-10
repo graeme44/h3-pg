@@ -41,21 +41,21 @@ h3_lat_lng_to_cell(PG_FUNCTION_ARGS)
 	if (h3_guc_strict)
 	{
 		ASSERT(
-			   point->x >= -180 && point->x <= 180,
+			   point->x >= -90 && point->x <= 90,
 			   ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE,
-			   "Longitude must be between -180 and 180 degrees inclusive, but got %f.",
+		"Latitude must be between -90 and 90 degrees inclusive, but got %f.",
 			   point->x
 			);
 		ASSERT(
-			   point->y >= -90 && point->y <= 90,
+			   point->y >= -180 && point->y <= 180,
 			   ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE,
-		"Latitude must be between -90 and 90 degrees inclusive, but got %f.",
+			   "Longitude must be between -180 and 180 degrees inclusive, but got %f.",
 			   point->y
 			);
 	}
 
-	location.lng = degsToRads(point->x);
-	location.lat = degsToRads(point->y);
+	location.lat = degsToRads(point->x);
+	location.lng = degsToRads(point->y);
 
 	h3_assert(latLngToCell(&location, resolution, &cell));
 
@@ -73,8 +73,8 @@ h3_cell_to_lat_lng(PG_FUNCTION_ARGS)
 
 	h3_assert(cellToLatLng(cell, &center));
 
-	point->x = radsToDegs(center.lng);
-	point->y = radsToDegs(center.lat);
+	point->x = radsToDegs(center.lat);
+	point->y = radsToDegs(center.lng);
 
 	PG_RETURN_POINT_P(point);
 }
