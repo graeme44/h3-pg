@@ -40,8 +40,8 @@ polygonToGeoLoop(POLYGON *polygon, GeoLoop * geoloop)
 
 	for (int i = 0; i < geoloop->numVerts; i++)
 	{
-		geoloop->verts[i].lng = degsToRads(polygon->p[i].x);
-		geoloop->verts[i].lat = degsToRads(polygon->p[i].y);
+		geoloop->verts[i].lat = degsToRads(polygon->p[i].x);
+		geoloop->verts[i].lng = degsToRads(polygon->p[i].y);
 	}
 }
 
@@ -68,8 +68,8 @@ linkedGeoLoopToNativePolygon(LinkedGeoLoop * linkedLoop, POLYGON *polygon)
 	count = 0;
 	while (linkedCoord != NULL)
 	{
-		(polygon->p[count]).x = radsToDegs(linkedCoord->vertex.lng);
-		(polygon->p[count]).y = radsToDegs(linkedCoord->vertex.lat);
+		(polygon->p[count]).x = radsToDegs(linkedCoord->vertex.lat);
+		(polygon->p[count]).y = radsToDegs(linkedCoord->vertex.lng);
 		linkedCoord = linkedCoord->next;
 		count++;
 	}

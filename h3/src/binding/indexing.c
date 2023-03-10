@@ -126,15 +126,15 @@ h3_cell_to_boundary(PG_FUNCTION_ARGS)
 
 	for (int v = 0; v < boundary.numVerts; v++)
 	{
-		lon = boundary.verts[v].lng;
 		lat = boundary.verts[v].lat;
+		lon = boundary.verts[v].lng;
 
 		/* check if different sign */
 		if (extend && fabs(lon - firstLon) > M_PI)
 			lon = lon + delta;
 
-		polygon->p[v].x = radsToDegs(lon);
-		polygon->p[v].y = radsToDegs(lat);
+		polygon->p[v].x = radsToDegs(lat);
+		polygon->p[v].y = radsToDegs(lon);
 	}
 
 	PG_RETURN_POLYGON_P(polygon);
