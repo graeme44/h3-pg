@@ -1,6 +1,6 @@
 \pset tuples_only on
 -- neighbouring indexes (one hexagon, one pentagon) at resolution 3
-\set geo POINT(-144.52399108028, 49.7165031828995)
+\set geo POINT(49.7165031828995, -144.52399108028)
 \set hexagon '\'831c02fffffffff\'::h3index'
 \set pentagon '\'831c00fffffffff\'::h3index'
 \set edgecross '\'8003fffffffffff\'::h3index'

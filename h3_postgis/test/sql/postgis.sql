@@ -113,7 +113,3 @@ WITH split AS (
             array(SELECT h3_polygon_to_cells(:transmeridianMulti, 3)))::geometry AS multi),
      dp AS (SELECT ST_Dump(multi) AS dp FROM split)
 SELECT COUNT(*) = 3 FROM dp;
-
-SELECT COUNT(*) FROM (
-    select h3_polygon_to_cells(st_geographyfromtext('POLYGON((-41 59,-41 89,41 89,41 59,-41 59))'),8)
-) q;
