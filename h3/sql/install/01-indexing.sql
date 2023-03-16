@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 Bytes & Brains
+ * Copyright 2018-2023 Bytes & Brains
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,13 +19,21 @@
 --| These function are used for finding the H3 index containing coordinates,
 --| and for finding the center and boundary of H3 indexes.
 
+--@ availability: unavailable
+--@ ref: h3_lat_lng_to_cell_geometry, h3_lat_lng_to_cell_geography
+CREATE OR REPLACE FUNCTION
+    h3_lat_lng_to_cell(lat float8, lng float8, resolution integer) RETURNS h3index
+AS 'h3' LANGUAGE C IMMUTABLE STRICT PARALLEL SAFE; COMMENT ON FUNCTION
+    h3_lat_lng_to_cell(lat float8, lng float8, integer)
+IS 'Indexes the location at the specified resolution.';
+
 --@ availability: 4.0.0
 --@ ref: h3_lat_lng_to_cell_geometry, h3_lat_lng_to_cell_geography
 CREATE OR REPLACE FUNCTION
     h3_lat_lng_to_cell(latlng point, resolution integer) RETURNS h3index
-AS 'h3' LANGUAGE C IMMUTABLE STRICT PARALLEL SAFE; COMMENT ON FUNCTION
+AS $$ SELECT h3_lat_lng_to_cell($1[1], $1[0], $2); $$ LANGUAGE SQL IMMUTABLE STRICT PARALLEL SAFE; COMMENT ON FUNCTION
     h3_lat_lng_to_cell(point, integer)
-IS 'Indexes the location at the specified resolution.';
+IS 'DEPRECATED: Use `h3_lat_lng_to_cell(lat, lng, resolution)` instead.';
 
 --@ availability: 4.0.0
 --@ ref: h3_cell_to_geometry, h3_cell_to_geography

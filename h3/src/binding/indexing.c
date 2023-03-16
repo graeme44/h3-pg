@@ -35,31 +35,31 @@ h3_lat_lng_to_cell(PG_FUNCTION_ARGS)
 {
 	H3Index		cell;
 	LatLng		location;
-	Point	   *point = PG_GETARG_POINT_P(0);
-	int			resolution = PG_GETARG_INT32(1);
+	float8		lat = PG_GETARG_FLOAT8(0);
+	float8		lng = PG_GETARG_FLOAT8(1);
+	int			resolution = PG_GETARG_INT32(2);
 
 	if (h3_guc_strict)
 	{
 		ASSERT(
-			   point->x >= -180 && point->x <= 180,
-			   ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE,
-			   "Longitude must be between -180 and 180 degrees inclusive, but got %f.",
-			   point->x
-			);
-		ASSERT(
-			   point->y >= -90 && point->y <= 90,
+			   lat >= -90 && lat <= 90,
 			   ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE,
 		"Latitude must be between -90 and 90 degrees inclusive, but got %f.",
-			   point->y
+			   lat
+			);
+		ASSERT(
+			   lng >= -180 && lng <= 180,
+			   ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE,
+			   "Longitude must be between -180 and 180 degrees inclusive, but got %f.",
+			   lng
 			);
 	}
 
-	location.lng = degsToRads(point->x);
-	location.lat = degsToRads(point->y);
+	location.lng = degsToRads(lng);
+	location.lat = degsToRads(lat);
 
 	h3_assert(latLngToCell(&location, resolution, &cell));
 
-	PG_FREE_IF_COPY(point, 0);
 	PG_RETURN_H3INDEX(cell);
 }
 
