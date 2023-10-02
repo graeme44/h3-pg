@@ -36,13 +36,10 @@ jobs:
 
       - name: Fix gettext linkage for PostgreSQL >= 15
         if: ${{ matrix.pg >= 15 }}
-        run: |
-          brew update
-          brew reinstall gettext
-          brew unlink gettext && brew link --force gettext
+        run: brew reinstall gettext
 
       - name: Generate
-        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DCMAKE_PREFIX_PATH=$(brew --prefix)
+        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }}
 
       - name: Build
         run: cmake --build build --config ${{ matrix.config }}
@@ -61,6 +58,9 @@ jobs:
       - name: Print regression diffs
         if: ${{ failure() }}
         run: cat build/*/regression.diffs
+
+    env: # something wrong with gettext
+      CXXFLAGS: -I/usr/local/opt/gettext/include
 
   # ----- PostGIS tests -----
   # I postgis on homebrew is pg@14 only, so I'm keeping this test separate
