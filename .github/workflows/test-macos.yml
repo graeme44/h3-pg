@@ -24,7 +24,7 @@ jobs:
         run: |
           brew --prefix
           mdfind -name libintl.h
-          cp /usr/local/Cellar/gettext/0.22.2/include/libintl.h /usr/local/include
+          ls -ltr /usr/local/include/libintl.h
 
       - name: Cache Cargo
         uses: actions/cache@v3
