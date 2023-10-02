@@ -42,7 +42,7 @@ jobs:
           brew unlink gettext && brew link --force gettext
 
       - name: Generate
-        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }}
+        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DCMAKE_PREFIX_PATH=$(brew --prefix)
 
       - name: Build
         run: cmake --build build --config ${{ matrix.config }}
@@ -64,7 +64,10 @@ jobs:
 
   # ----- PostGIS tests -----
   # I postgis on homebrew is pg@14 only, so I'm keeping this test separate
-  macos-12-postgis:
+  macos-12-postgis:     
+    strategy:
+      matrix:
+        config: [Release, Debug]
     runs-on: macos-12
 
     name: macos 🐘14 w/ postgis@3 (homebrew)
