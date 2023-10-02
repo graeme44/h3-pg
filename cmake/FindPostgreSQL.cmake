@@ -41,7 +41,7 @@ execute_process(COMMAND ${PostgreSQL_CONFIG} --pkglibdir         OUTPUT_VARIABLE
 # @TODO: Figure out if we need _INCLUDE_DIR and/or _PKG_INCLUDE_DIR
 
 # Create include dirs list
-list(APPEND PostgreSQL_INCLUDE_DIRS "${PostgreSQL_INCLUDE_DIR}" "${PostgreSQL_PKG_INCLUDE_DIR}" "${PostgreSQL_SERVER_INCLUDE_DIR}")
+list(APPEND PostgreSQL_INCLUDE_DIRS "/usr/local/include ${PostgreSQL_INCLUDE_DIR}" "${PostgreSQL_PKG_INCLUDE_DIR}" "${PostgreSQL_SERVER_INCLUDE_DIR}")
 list(APPEND PostgreSQL_LIBRARY_DIRS "${PostgreSQL_LIBRARY_DIR}")
 
 # Set library to search for (which is different on WIN32)
@@ -159,7 +159,7 @@ if(PostgreSQL_FOUND)
 
   set_target_properties(PostgreSQL::PostgreSQL PROPERTIES
     #INTERFACE_COMPILE_OPTIONS "${PostgreSQL_CFLAGS_OTHER}"
-    INTERFACE_INCLUDE_DIRECTORIES "${PostgreSQL_INCLUDE_DIRS} /usr/local/include"
+    INTERFACE_INCLUDE_DIRECTORIES "${PostgreSQL_INCLUDE_DIRS}"
   )
 endif()
 
