@@ -36,7 +36,7 @@ jobs:
 
       - name: Fix gettext linkage for PostgreSQL >= 15
         if: ${{ matrix.pg >= 15 }}
-        run: brew reinstall gettext
+        run: brew unlink gettext && brew link --force gettext
 
       - name: Generate
         run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }}
