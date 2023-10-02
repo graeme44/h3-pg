@@ -34,6 +34,9 @@ jobs:
           brew install postgresql@${{ matrix.pg }}
           brew link postgresql@${{ matrix.pg }}
 
+      - name: Debug
+        run: ls /usr/local/include
+
       - name: Generate
         run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DCMAKE_CXX_FLAGS=-I/usr/local/include
 
