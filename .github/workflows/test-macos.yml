@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         config: [Release, Debug]
+        pg: [16, 15, 14]
 
     runs-on: macos-13
 
@@ -27,7 +28,7 @@ jobs:
         run: cargo install --locked --git https://github.com/rjuju/pg_validate_extupgrade.git
 
       - name: Install PostgreSQL server dependencies
-        run: brew install postgis
+        run: brew install postgres@${{ matrix.pg }} postgis
 
       - name: Generate
         run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }}
@@ -40,7 +41,7 @@ jobs:
 
       - name: Prepare PostgreSQL
         run: |
-          pg_ctl start -D /usr/local/var/postgresql@14 --wait
+          pg_ctl start -D /usr/local/var/postgresql@${{ matrix.pg }} --wait
           createdb runner
 
       - name: Test
