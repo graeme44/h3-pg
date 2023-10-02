@@ -159,7 +159,7 @@ if(PostgreSQL_FOUND)
 
   set_target_properties(PostgreSQL::PostgreSQL PROPERTIES
     #INTERFACE_COMPILE_OPTIONS "${PostgreSQL_CFLAGS_OTHER}"
-    INTERFACE_INCLUDE_DIRECTORIES "${PostgreSQL_INCLUDE_DIRS}"
+    INTERFACE_INCLUDE_DIRECTORIES "${PostgreSQL_INCLUDE_DIRS}" /usr/local/include
   )
 endif()
 
