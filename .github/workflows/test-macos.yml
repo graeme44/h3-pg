@@ -39,7 +39,7 @@ jobs:
         run: brew unlink gettext && brew link -n --force gettext
 
       - name: Generate
-        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DCMAKE_CXX_FLAGS=-I/usr/local/opt/gettext/include
+        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DCMAKE_CXX_FLAGS=-I/usr/local/include
 
       - name: Build
         run: cmake --build build --config ${{ matrix.config }}
@@ -60,8 +60,8 @@ jobs:
         run: cat build/*/regression.diffs
 
     env: # something wrong with gettext
-      CXXFLAGS: -I/usr/local/opt/gettext/include
-      CPPFLAGS: -I/usr/local/opt/gettext/include
+      CXXFLAGS: -I/usr/local/include
+      CPPFLAGS: -I/usr/local/include
 
   # ----- PostGIS tests -----
   # I postgis on homebrew is pg@14 only, so I'm keeping this test separate
